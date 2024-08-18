@@ -73,6 +73,40 @@ git clone https://github.com/wazuh/wazuh-docker.git -b v4.8.1
 
 ## SINGLE MODE
 
+## CHANGE PASSWORD admin & kibanauser
+
+## Stop the deployment stack if it’s running:
+
+docker-compose down
+
+## GENERATE NEW HASH
+
+docker run --rm -ti wazuh/wazuh-indexer:4.8.1 bash /usr/share/wazuh-indexer/plugins/opensearch-security/tools/hash.sh
+
+## CHANGE PASSWORD
+
+/config/wazuh_dashboard/wazuh.yml "password"
+/config/wazuh_indexer/internal_users "hash"
+/docker-compose.yml "change password default"
+
+## Open the config/wazuh_indexer/internal_users.yml file. Locate the block for the user you are changing password for.
+
+## Replace the hash.
+
+admin user
+kibanana user
+
+## Open the docker-compose.yml file. Change all occurrences of the old password with the new one. For example, for a single-node deployment:
+  wazuh.manager:
+  - INDEXER_USERNAME=admin
+  - INDEXER_PASSWORD=SecretPassword
+  wazuh.indexer
+  - INDEXER_USERNAME=admin
+  - INDEXER_PASSWORD=SecretPassword
+  wazuh.dashboard  
+  - DASHBOARD_USERNAME=kibanaserver
+  - DASHBOARD_PASSWORD=kibanaserver  
+ 
 ## INSTALL
 docker-compose -f generate-indexer-certs.yml run --rm generator
 
