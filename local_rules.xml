@@ -61,7 +61,7 @@
   <!-- Whitelist Endereços IPs Conhecidos -->
   
   <rule id="100007" level="0">
-    <list field="srcip" lookup="address_match_key">etc/lists/whitelist</list>
+    <list field="srcip" lookup="address_match_key">/var/ossec/etc/lists/whitelist</list>
     <description>whitelist firewall endereços ips ####### </description>
     <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,</group>
   </rule>
